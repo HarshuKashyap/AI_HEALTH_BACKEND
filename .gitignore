@@ -1,15 +1,25 @@
-# Python
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Virtual env
+# Virtual environment
 .venv/
 env/
 venv/
+ENV/
+*.env
 
-# Databases
+# IDE/Editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Database files (agar sirf local ke liye hai)
 *.db
 
 # Logs
