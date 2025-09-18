@@ -1,58 +1,29 @@
-# main.py
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
-import ai_logic
-import db
-import datetime
+from ai_logic import get_answer  # KB + OpenAI dono
 
-app = FastAPI(title="AI Healthcare Assistant Backend")
+app = FastAPI()
 
-# Dev CORS - in production restrict origins
+# CORS allow
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # development ke liye
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-class SymptomRequest(BaseModel):
-    symptoms: str
-    user_id: Optional[str] = None
-
-class PredictResponse(BaseModel):
-    advice: str
-    probable_conditions: List[str]
-    severity: str
-    recommendations: List[str]
-
-@app.on_event("startup")
-def startup_event():
-    db.init_db()
-
 @app.get("/")
-def read_root():
-    return {"message": "AI Healthcare Assistant Backend is running 🚀", "time": datetime.datetime.utcnow().isoformat()}
+def root():
+    return {"message": "AI Health Assistant Running 🚀"}
 
-@app.get("/health")
-def health():
-    return {"status": "ok", "time": datetime.datetime.utcnow().isoformat()}
+class ChatRequest(BaseModel):
+    message: str
 
-@app.post("/predict", response_model=PredictResponse)
-def predict(req: SymptomRequest):
-    if not req.symptoms or len(req.symptoms.strip()) < 3:
-        raise HTTPException(status_code=400, detail="Provide a short description of symptoms.")
-    result = ai_logic.analyze_symptoms(req.symptoms)
-    db.save_query(req.symptoms, result)
-    return {
-        "advice": result["advice"],
-        "probable_conditions": result["probable_conditions"],
-        "severity": result["severity"],
-        "recommendations": result["recommendations"]
-    }
+# ✅ Make sure this matches your React fetch
+@app.post("/chat/message")
+def chat_message(req: ChatRequest):
+    answer = get_answer(req.message)
+    return {"answer": answer}   # key should be "answer" for React fetch
 
-@app.get("/history")
-def history(limit: int = 20):
-    return db.get_history(limit)

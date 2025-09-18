@@ -1,0 +1,7 @@
+POST http://127.0.0.1:8000/chat/message
+Content-Type: application/json
+
+{
+  "user_id": "1",
+  "message": "mujhe bukhar hai 2 din se"
+}

@@ -1,0 +1,27 @@
+[
+    {
+        "id": "1",
+        "topic": "fever",
+        "text": "Stay hydrated, take rest, monitor temperature for fever"
+    },
+    {
+        "id": "2",
+        "topic": "cough",
+        "text": "Avoid cold drinks, rest voice for cough"
+    },
+    {
+        "id": "3",
+        "topic": "diabetes",
+        "text": "Monitor blood sugar, exercise, follow low sugar diet for diabetes"
+    },
+    {
+        "id": "4",
+        "topic": "high cholesterol",
+        "text": "Balanced diet, reduce saturated fat, exercise for high cholesterol"
+    },
+    {
+        "id": "5",
+        "topic": "migraine",
+        "text": "Take adequate rest, stay hydrated for headache and migraine"
+    }
+]

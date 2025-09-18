@@ -1,13 +1,18 @@
-# Use official FastAPI image (tiangolo)
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
+# Base image
+FROM python:3.9-slim
 
-# Copy code
-COPY . /app
+# Set working directory
+WORKDIR /app
 
-# Install dependencies (if not using prebuilt image)
-# If you have requirements.txt:
-COPY requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 8000 (image already runs uvicorn)
-EXPOSE 8000
+# Copy rest of the app
+COPY . .
+
+# Render assigns PORT dynamically (default to 8000 for local run)
+EXPOSE 10000
+
+# Start FastAPI app with uvicorn, bind to Render's $PORT
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-10000}"]
