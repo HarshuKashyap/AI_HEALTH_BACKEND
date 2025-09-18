@@ -17,11 +17,12 @@ export default function ChatBox() {
     setMessages(prev => [...prev, userMsg]);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/chat/message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
-      });
+      const res = await fetch("https://ai-health-backend-r967.onrender.com/chat/message", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ message: input }),
+});
+
 
       const data = await res.json();
       const aiMsg = { sender: "ai", text: data.answer || "No answer found." };
