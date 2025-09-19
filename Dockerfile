@@ -1,5 +1,5 @@
-# Base image with Python 3.9 + Uvicorn/Gunicorn for FastAPI
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
+# Base image with Python 3.10 + Uvicorn/Gunicorn for FastAPI
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
 
 # Set working directory
 WORKDIR /app
